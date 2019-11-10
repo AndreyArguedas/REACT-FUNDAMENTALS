@@ -1,0 +1,13 @@
+Steps to create REACT application:
+
+Pre requisites:
+
+    * Node.js installed
+
+Steps:
+
+1 - Install react package: npm install -g create-react-app
+
+2 - Create the app : create-react-app your-app
+
+3 - Start the app: npm start
