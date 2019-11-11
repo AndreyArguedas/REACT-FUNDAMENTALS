@@ -11,3 +11,7 @@ Steps:
 2 - Create the app : create-react-app your-app
 
 3 - Start the app: npm start
+
+Test the app:
+
+ * npm test
