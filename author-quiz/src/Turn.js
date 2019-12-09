@@ -3,7 +3,7 @@ import Book from './Book.js';
 
 function Turn({author, books, highlight, onAnswerSelected}) {
     return (
-      <div className={"row turn " + highlight}> 
+      <div className="row turn" style={{backgroundColor: highlight}}> 
          <div className="col-4 offset-1">
              <img src={author.imageUrl} className="authorimage" alt="Author"/>
          </div>

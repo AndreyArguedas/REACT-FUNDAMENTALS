@@ -42,12 +42,12 @@ let getTurnData = (authors) => {
 
 const state = {
     turnData: getTurnData(authors),
-    highlight: 'noneHighlight'
+    highlight: ''
 }
 
 let onAnswerSelected = (answer) => {
     const isCorrect = state.turnData.author.books.some( book => book === answer)
-    state.highlight = isCorrect ? 'correctHighlight' : 'wrongHighlight'
+    state.highlight = isCorrect ? 'green' : 'red'
     render()
 }
 
