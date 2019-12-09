@@ -19,3 +19,11 @@
 .answer:hover {
   background-color: #D0E3F0;
 }
+
+.correctHighlight {
+  background-color: green;
+}
+
+.wrongHighlight {
+  background-color: red;
+}

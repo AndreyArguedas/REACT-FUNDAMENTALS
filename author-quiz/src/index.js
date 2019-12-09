@@ -26,7 +26,7 @@ const authors = [
     }
 ];
 
-var getTurnData = (authors) => {
+let getTurnData = (authors) => {
     const allBooks = authors.reduce((p, c) => {
         return p.concat(c.books);
     }, []);
@@ -41,18 +41,20 @@ var getTurnData = (authors) => {
 }
 
 const state = {
-    /*turnData: {
-        author: authors[0],
-        books: authors[0].books
-    }*/
-
-    turnData: getTurnData(authors)
-    
+    turnData: getTurnData(authors),
+    highlight: 'noneHighlight'
 }
 
-ReactDOM.render(<AuthorQuiz {... state}/>, document.getElementById('root'));
+let onAnswerSelected = (answer) => {
+    const isCorrect = state.turnData.author.books.some( book => book === answer)
+    state.highlight = isCorrect ? 'correctHighlight' : 'wrongHighlight'
+    render()
+}
+
+let render = () => ReactDOM.render(<AuthorQuiz {... state} onAnswerSelected={onAnswerSelected}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
+render()
 serviceWorker.unregister();

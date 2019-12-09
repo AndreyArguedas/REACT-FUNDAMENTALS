@@ -5,11 +5,11 @@ import Hero from './Hero.js';
 import Footer from './Footer.js';
 import Turn from './Turn.js';
 
-function AuthorQuiz({turnData}) {
+function AuthorQuiz({turnData, highlight, onAnswerSelected}) {
   return (
     <div className="container-fluid">
       <Hero/>
-      <Turn {... turnData}/>
+      <Turn {... turnData} highlight={highlight} onAnswerSelected={onAnswerSelected}/>
       <Footer/>
     </div>
   );
