@@ -56,18 +56,19 @@ class AuhtorForm extends React.Component {
         </form>
     }
 }
-function AddAuthorForm({match}) {
+function AddAuthorForm({authors}) {
+    console.log(authors);
     return (
       <div className="AddAuthorForm">
          <h1>Add Author</h1>
-         <AuthorWrapper/>
+         <AuthorWrapper authors={authors}/>
       </div>
     );
 }
 
-const AuthorWrapper = withRouter(({history}) =>
+const AuthorWrapper = withRouter(({history, authors}) =>
     <AuhtorForm onAddAuthor={author => {
-        [].push(author);
+        authors.push(author);
         history.push('/');
     }}/>
 );

@@ -7,7 +7,7 @@ import AddAuthorForm from './AddAuthorForm';
 import * as serviceWorker from './serviceWorker';
 import {shuffle, sample} from 'underscore';
 
-const authors = [
+let authors = [
     {
         name: 'Mark Twain',
         imageUrl: 'images/authors/Mark_Twain.jpg',
@@ -42,10 +42,15 @@ let getTurnData = (authors) => {
     }
 }
 
-const state = {
-    turnData: getTurnData(authors),
-    highlight: ''
+let resetState = () => {
+    return {
+        turnData: getTurnData(authors),
+        highlight: '',
+        authors : authors
+    }
 }
+
+let state = resetState();
 
 let onAnswerSelected = (answer) => {
     const isCorrect = state.turnData.author.books.some( book => book === answer)
@@ -53,14 +58,23 @@ let onAnswerSelected = (answer) => {
     render()
 }
 
+let onContinue = () => {
+    state = resetState();
+    render();
+}
+
 let App = () => {
-    return <AuthorQuiz {... state} onAnswerSelected={onAnswerSelected}/>;
+    return <AuthorQuiz {... state} onAnswerSelected={onAnswerSelected} onContinue={onContinue}/>;
+}
+
+let AddAuthorFormWrapper = () => {
+    return <AddAuthorForm authors={authors}/>
 }
 
 let render = () => ReactDOM.render(
     <BrowserRouter>
         <Route exact path="/" component={App} />
-        <Route exact path="/add" component={AddAuthorForm} />
+        <Route exact path="/add" component={AddAuthorFormWrapper} />
     </BrowserRouter>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
