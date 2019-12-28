@@ -1,5 +1,6 @@
 import React from 'react';
 import "./AddAuthorForm.css";
+import { withRouter } from 'react-router-dom';
 
 
 class AuhtorForm extends React.Component {
@@ -59,9 +60,16 @@ function AddAuthorForm({match}) {
     return (
       <div className="AddAuthorForm">
          <h1>Add Author</h1>
-         <AuhtorForm onAddAuthor={console.log}/>
+         <AuthorWrapper/>
       </div>
     );
-  }
+}
+
+const AuthorWrapper = withRouter(({history}) =>
+    <AuhtorForm onAddAuthor={author => {
+        [].push(author);
+        history.push('/');
+    }}/>
+);
 
 export default AddAuthorForm;
