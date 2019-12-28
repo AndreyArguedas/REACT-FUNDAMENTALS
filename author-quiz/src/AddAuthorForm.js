@@ -57,7 +57,6 @@ class AuhtorForm extends React.Component {
     }
 }
 function AddAuthorForm({authors}) {
-    console.log(authors);
     return (
       <div className="AddAuthorForm">
          <h1>Add Author</h1>

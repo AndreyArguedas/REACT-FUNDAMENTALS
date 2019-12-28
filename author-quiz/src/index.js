@@ -5,6 +5,8 @@ import './index.css';
 import AuthorQuiz from './AuthorQuiz';
 import AddAuthorForm from './AddAuthorForm';
 import * as serviceWorker from './serviceWorker';
+import * as Redux from 'redux';
+import * as ReactRedux from 'react-redux';
 import {shuffle, sample} from 'underscore';
 
 let authors = [
@@ -42,43 +44,38 @@ let getTurnData = (authors) => {
     }
 }
 
-let resetState = () => {
-    return {
-        turnData: getTurnData(authors),
-        highlight: '',
-        authors : authors
+let reducer = (state = { turnData: getTurnData(authors), highlight: '',authors : authors}, action) => {
+    switch(action.type) {
+        case 'ANSWER_SELECTED': 
+            const isCorrect = state.turnData.author.books.some( book => book === action.answer)
+            return Object.assign({}, state, {highlight: isCorrect ? 'green' : 'red'})
+        case 'CONTINUE':
+            return Object.assign({}, state, {
+                turnData: getTurnData(state.authors),
+                highlight: '',
+            })
+        default: return state;
     }
 }
 
-let state = resetState();
-
-let onAnswerSelected = (answer) => {
-    const isCorrect = state.turnData.author.books.some( book => book === answer)
-    state.highlight = isCorrect ? 'green' : 'red'
-    render()
-}
-
-let onContinue = () => {
-    state = resetState();
-    render();
-}
+let store = Redux.createStore(reducer);
 
 let App = () => {
-    return <AuthorQuiz {... state} onAnswerSelected={onAnswerSelected} onContinue={onContinue}/>;
+    return <ReactRedux.Provider store={store}><AuthorQuiz/></ReactRedux.Provider>
 }
 
 let AddAuthorFormWrapper = () => {
     return <AddAuthorForm authors={authors}/>
 }
 
-let render = () => ReactDOM.render(
+ReactDOM.render(
     <BrowserRouter>
         <Route exact path="/" component={App} />
         <Route exact path="/add" component={AddAuthorFormWrapper} />
-    </BrowserRouter>, document.getElementById('root'));
+    </BrowserRouter>, document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-render()
 serviceWorker.unregister();
