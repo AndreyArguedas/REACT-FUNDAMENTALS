@@ -1,10 +1,12 @@
 import React from 'react';
 import "./AddAuthorForm.css";
+import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 
-class AuhtorForm extends React.Component {
+class AuthorForm extends React.Component {
     constructor(props) {
+        console.log(props);
         super(props);
         this.state = {
             name: "",
@@ -56,20 +58,22 @@ class AuhtorForm extends React.Component {
         </form>
     }
 }
-function AddAuthorForm({authors}) {
+function AddAuthorForm({onAddAuthor}) {
     return (
       <div className="AddAuthorForm">
          <h1>Add Author</h1>
-         <AuthorWrapper authors={authors}/>
+         <AuthorForm onAddAuthor={onAddAuthor}/>
       </div>
     );
 }
 
-const AuthorWrapper = withRouter(({history, authors}) =>
-    <AuhtorForm onAddAuthor={author => {
-        authors.push(author);
-        history.push('/');
-    }}/>
-);
+let mapDispatchToProps = (dispatch, props) => {
+    return {
+        onAddAuthor : (author) => {
+            dispatch({type: 'ADD_AUTHOR', author})
+            props.history.push('/');
+        }
+    };
+}
 
-export default AddAuthorForm;
+export default withRouter(connect(() => ({ }), mapDispatchToProps)(AddAuthorForm));
